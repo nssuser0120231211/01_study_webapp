@@ -38,3 +38,8 @@
 ### 補足
 - ステートレスとは？
   - セッションを使用しない。SmileのアプリはLoginした情報をSessionに保存しているので？
+- Curlコマンド
+  ```bash
+  # -iオプションはResponseのHeaderを表示する
+  curl -i https://www.bing.com/
+  ```
