@@ -1,18 +1,19 @@
 # HTTPのRequestとResponseについて
 
-### HTTPRequestについて
+### 1. HTTPRequestについて
 - HeaderとBodyがある
 - Headerはリクエストの付加的な情報を含めることが出来る
   - Host: 自分のHostアドレス
   - User-Agent: 使用しているブラウザなどの情報
   - Cookie: ブラウザに保存している情報
   - Barere: 認証するためのパスワードなど
+- BodyはGetの時は空、Postの時はリクエストパラメータを設定する(KeyValue or JSON)
 - Getメソッド
   - データ取得用のメソッド
   - パラメータはURLの後ろに?Key1=Value1&Key2=Value2の形式で指定する
-    - 例）Bingで検索すると以下のような形式になる
+    - 例）Bingで「NSS」を検索すると以下のような形式になる
       ```
-      https://www.bing.com/search?pglt=515&q=test&cvid=800332f9339f4510a8263bcf35f77027
+      https://www.bing.com/search?q=NSS&form=ANNH01&refig=ff4b60e5f7684f79901b5d8022d5f377&pc=DCTS&adppc=EDGEESS
       ``````
 - Postメソッド
   - データ送信用のメソッド
@@ -22,7 +23,7 @@
 - Putメソッド
 - Deleteメソッド
 
-### HTTPResponseについて
+### 2. HTTPResponseについて
 - ステータスラインでResponseCodeが返ってくる
   - 200番台は正常終了
   - 300番台はリダイレクト系
@@ -35,7 +36,7 @@
   - Content-Typeがtext/htmlの場合はHTMLが返ってくる⇒ブラウザが解釈して画面表示
   - Content-Typeがtext/jsonの場合はJsonが返ってくる
 
-### 補足
+### 3. 補足
 - ステートレスとは？
   - セッションを使用しない。SmileのアプリはLoginした情報をSessionに保存しているので？
 - Curlコマンド
