@@ -1,0 +1,156 @@
+<svg viewBox="0 0 1000 800" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .title { font-family: Arial, sans-serif; font-size: 24px; font-weight: bold; text-anchor: middle; }
+      .subtitle { font-family: Arial, sans-serif; font-size: 16px; text-anchor: middle; }
+      .component { font-family: Arial, sans-serif; font-size: 14px; text-anchor: middle; font-weight: bold; }
+      .label { font-family: Arial, sans-serif; font-size: 12px; text-anchor: middle; }
+      .arrow { stroke: #333; stroke-width: 2; fill: none; marker-end: url(#arrowhead); }
+      .bidirectional { stroke: #333; stroke-width: 2; fill: none; marker-start: url(#arrowhead); marker-end: url(#arrowhead); }
+      .port { font-family: Arial, sans-serif; font-size: 11px; text-anchor: middle; fill: #666; }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#333" />
+    </marker>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1000" height="800" fill="#f8f9fa"/>
+  
+  <!-- Title -->
+  <text x="500" y="40" class="title" fill="#2c3e50">Apache + Tomcat システム構成図</text>
+  
+  <!-- Internet Cloud -->
+  <ellipse cx="120" cy="120" rx="80" ry="40" fill="#e3f2fd" stroke="#1976d2" stroke-width="2"/>
+  <text x="120" y="125" class="component" fill="#1976d2">インターネット</text>
+  
+  <!-- Load Balancer (Optional) -->
+  <rect x="260" y="80" width="140" height="80" rx="10" fill="#fff3e0" stroke="#f57c00" stroke-width="2"/>
+  <text x="330" y="110" class="component" fill="#f57c00">ロードバランサー</text>
+  <text x="330" y="130" class="label" fill="#f57c00">(Optional)</text>
+  <text x="330" y="145" class="label" fill="#f57c00">nginx/HAProxy</text>
+  
+  <!-- Apache HTTP Server -->
+  <rect x="50" y="220" width="160" height="120" rx="10" fill="#ffebee" stroke="#d32f2f" stroke-width="3"/>
+  <text x="130" y="250" class="component" fill="#d32f2f">Apache HTTP Server</text>
+  <text x="130" y="270" class="label" fill="#d32f2f">Webサーバー</text>
+  <text x="130" y="290" class="label" fill="#d32f2f">• 静的コンテンツ配信</text>
+  <text x="130" y="305" class="label" fill="#d32f2f">• SSL終端</text>
+  <text x="130" y="320" class="label" fill="#d32f2f">• リバースプロキシ</text>
+  <text x="45" y="240" class="port">:80</text>
+  <text x="45" y="255" class="port">:443</text>
+  
+  <!-- Apache Tomcat Instances -->
+  <!-- Tomcat 1 -->
+  <rect x="300" y="200" width="160" height="140" rx="10" fill="#e8f5e8" stroke="#388e3c" stroke-width="3"/>
+  <text x="380" y="230" class="component" fill="#388e3c">Apache Tomcat 1</text>
+  <text x="380" y="250" class="label" fill="#388e3c">アプリケーションサーバー</text>
+  <text x="380" y="270" class="label" fill="#388e3c">• Java Servlet実行</text>
+  <text x="380" y="285" class="label" fill="#388e3c">• JSP処理</text>
+  <text x="380" y="300" class="label" fill="#388e3c">• セッション管理</text>
+  <text x="380" y="315" class="label" fill="#388e3c">• ビジネスロジック</text>
+  <text x="295" y="220" class="port">:8080</text>
+  <text x="295" y="235" class="port">:8009</text>
+  
+  <!-- Tomcat 2 -->
+  <rect x="300" y="360" width="160" height="140" rx="10" fill="#e8f5e8" stroke="#388e3c" stroke-width="3"/>
+  <text x="380" y="390" class="component" fill="#388e3c">Apache Tomcat 2</text>
+  <text x="380" y="410" class="label" fill="#388e3c">アプリケーションサーバー</text>
+  <text x="380" y="430" class="label" fill="#388e3c">• 冗長化構成</text>
+  <text x="380" y="445" class="label" fill="#388e3c">• 負荷分散</text>
+  <text x="380" y="460" class="label" fill="#388e3c">• フェイルオーバー</text>
+  <text x="380" y="475" class="label" fill="#388e3c">• スケーラビリティ</text>
+  <text x="295" y="380" class="port">:8080</text>
+  <text x="295" y="395" class="port">:8009</text>
+  
+  <!-- Database -->
+  <rect x="540" y="280" width="160" height="120" rx="10" fill="#e3f2fd" stroke="#1976d2" stroke-width="3"/>
+  <text x="620" y="310" class="component" fill="#1976d2">データベース</text>
+  <text x="620" y="330" class="label" fill="#1976d2">MySQL/PostgreSQL</text>
+  <text x="620" y="350" class="label" fill="#1976d2">• データ永続化</text>
+  <text x="620" y="365" class="label" fill="#1976d2">• トランザクション</text>
+  <text x="620" y="380" class="label" fill="#1976d2">• データ整合性</text>
+  <text x="535" y="300" class="port">:3306</text>
+  <text x="535" y="315" class="port">:5432</text>
+  
+  <!-- File System / Static Content -->
+  <rect x="50" y="380" width="160" height="100" rx="10" fill="#fff3e0" stroke="#f57c00" stroke-width="2"/>
+  <text x="130" y="410" class="component" fill="#f57c00">ファイルシステム</text>
+  <text x="130" y="430" class="label" fill="#f57c00">• 静的ファイル</text>
+  <text x="130" y="445" class="label" fill="#f57c00">• 画像、CSS、JS</text>
+  <text x="130" y="460" class="label" fill="#f57c00">• ログファイル</text>
+  
+  <!-- Session Store (Optional) -->
+  <rect x="540" y="420" width="160" height="80" rx="10" fill="#fce4ec" stroke="#c2185b" stroke-width="2"/>
+  <text x="620" y="445" class="component" fill="#c2185b">セッションストア</text>
+  <text x="620" y="465" class="label" fill="#c2185b">Redis/Memcached</text>
+  <text x="620" y="480" class="label" fill="#c2185b">(Optional)</text>
+  
+  <!-- Monitoring -->
+  <rect x="750" y="200" width="140" height="100" rx="10" fill="#f3e5f5" stroke="#7b1fa2" stroke-width="2"/>
+  <text x="820" y="230" class="component" fill="#7b1fa2">監視システム</text>
+  <text x="820" y="250" class="label" fill="#7b1fa2">• ログ監視</text>
+  <text x="820" y="265" class="label" fill="#7b1fa2">• パフォーマンス</text>
+  <text x="820" y="280" class="label" fill="#7b1fa2">• ヘルスチェック</text>
+  
+  <!-- Connection lines -->
+  <!-- Internet to Load Balancer -->
+  <line x1="200" y1="120" x2="260" y2="120" class="arrow"/>
+  <text x="230" y="115" class="port">HTTP/HTTPS</text>
+  
+  <!-- Load Balancer to Apache -->
+  <line x1="300" y1="160" x2="150" y2="220" class="arrow"/>
+  
+  <!-- Internet directly to Apache (alternative) -->
+  <line x1="170" y1="140" x2="130" y2="220" class="arrow" stroke-dasharray="5,5"/>
+  <text x="140" y="175" class="port" fill="#666">直接接続</text>
+  
+  <!-- Apache to Tomcat 1 -->
+  <line x1="210" y1="260" x2="300" y2="260" class="bidirectional"/>
+  <text x="255" y="255" class="port">AJP/HTTP</text>
+  
+  <!-- Apache to Tomcat 2 -->
+  <line x1="210" y1="300" x2="300" y2="420" class="bidirectional"/>
+  <text x="240" y="360" class="port">AJP/HTTP</text>
+  
+  <!-- Tomcat to Database -->
+  <line x1="460" y1="270" x2="540" y2="340" class="bidirectional"/>
+  <line x1="460" y1="430" x2="540" y2="340" class="bidirectional"/>
+  <text x="500" y="305" class="port">JDBC</text>
+  
+  <!-- Apache to File System -->
+  <line x1="130" y1="340" x2="130" y2="380" class="arrow"/>
+  <text x="150" y="360" class="port">静的ファイル</text>
+  
+  <!-- Tomcat to Session Store -->
+  <line x1="460" y1="450" x2="540" y2="460" class="bidirectional" stroke-dasharray="5,5"/>
+  <text x="500" y="455" class="port">セッション共有</text>
+  
+  <!-- Monitoring connections -->
+  <line x1="750" y1="250" x2="460" y2="270" class="arrow" stroke="#7b1fa2" stroke-dasharray="3,3"/>
+  <line x1="750" y1="250" x2="460" y2="430" class="arrow" stroke="#7b1fa2" stroke-dasharray="3,3"/>
+  <line x1="750" y1="250" x2="210" y2="280" class="arrow" stroke="#7b1fa2" stroke-dasharray="3,3"/>
+  
+  <!-- Protocol Labels -->
+  <rect x="50" y="550" width="900" height="220" rx="10" fill="#ffffff" stroke="#ddd" stroke-width="1"/>
+  <text x="500" y="580" class="subtitle" fill="#333">通信プロトコルと構成の説明</text>
+  
+  <!-- Legend -->
+  <text x="70" y="610" class="label" fill="#333" font-weight="bold">主要な通信プロトコル:</text>
+  <text x="70" y="630" class="label" fill="#333">• HTTP/HTTPS: クライアントとWebサーバー間</text>
+  <text x="70" y="645" class="label" fill="#333">• AJP (Apache JServ Protocol): ApacheとTomcat間の効率的な通信</text>
+  <text x="70" y="660" class="label" fill="#333">• HTTP: ApacheとTomcat間の代替プロトコル</text>
+  <text x="70" y="675" class="label" fill="#333">• JDBC: TomcatとDatabase間のデータベース接続</text>
+  
+  <text x="500" y="610" class="label" fill="#333" font-weight="bold">アーキテクチャの特徴:</text>
+  <text x="500" y="630" class="label" fill="#333">• 負荷分散: 複数のTomcatインスタンスで処理を分散</text>
+  <text x="500" y="645" class="label" fill="#333">• 役割分離: Apache（静的）+ Tomcat（動的）</text>
+  <text x="500" y="660" class="label" fill="#333">• 高可用性: 冗長構成によるフェイルオーバー対応</text>
+  <text x="500" y="675" class="label" fill="#333">• スケーラビリティ: 水平スケーリング対応</text>
+  
+  <text x="70" y="705" class="label" fill="#333" font-weight="bold">ポート設定例:</text>
+  <text x="70" y="720" class="label" fill="#333">Apache: 80 (HTTP), 443 (HTTPS)</text>
+  <text x="70" y="735" class="label" fill="#333">Tomcat: 8080 (HTTP), 8009 (AJP)</text>
+  <text x="70" y="750" class="label" fill="#333">Database: 3306 (MySQL), 5432 (PostgreSQL)</text>
+  
+</svg>
