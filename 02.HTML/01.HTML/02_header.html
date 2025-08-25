@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTMLヘッダー要素の完全ガイド</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .element-card {
+            background: white;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        
+        .element-card:hover {
+            transform: translateY(-3px);
+        }
+        
+        .element-header {
+            background: linear-gradient(45deg, #4ecdc4, #44a08d);
+            color: white;
+            padding: 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        
+        .element-body {
+            padding: 25px;
+        }
+        
+        .code-example {
+            background: #f8f9fa;
+            border-left: 4px solid #4ecdc4;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+        
+        .highlight {
+            background: #fff3cd;
+            padding: 15px;
+            border-left: 4px solid #ffc107;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        .important {
+            background: #f8d7da;
+            padding: 15px;
+            border-left: 4px solid #dc3545;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        .category {
+            background: #e7f3ff;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 25px 0;
+            border: 2px solid #4ecdc4;
+        }
+        
+        .category h3 {
+            color: #667eea;
+            margin-top: 0;
+            border-bottom: 2px solid #4ecdc4;
+            padding-bottom: 10px;
+        }
+        
+        .attribute-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        .attribute-table th,
+        .attribute-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        .attribute-table th {
+            background: #4ecdc4;
+            color: white;
+        }
+        
+        .attribute-table tr:nth-child(even) {
+            background: #f2f2f2;
+        }
+        
+        .demo-section {
+            background: #f0fffe;
+            border: 2px solid #4ecdc4;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .demo-button {
+            background: linear-gradient(45deg, #4ecdc4, #44a08d);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            margin: 5px;
+        }
+        
+        .demo-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .structure-example {
+            background: #f8f9fa;
+            border: 2px solid #6c757d;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .attribute-table {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏠 HTMLヘッダー要素ガイド</h1>
+            <p>&lt;head&gt;要素に記述できる全ての要素を詳しく解説</p>
+        </div>
+        
+        <div class="content">
+            <div class="highlight">
+                <h3>🎯 ヘッダー要素とは？</h3>
+                <p><strong>&lt;head&gt;</strong>要素は、ページの<strong>メタデータ</strong>（ページに関する情報）を格納する領域です。ここに記述された内容は通常、ブラウザの画面には直接表示されませんが、ページの動作や検索エンジンでの表示に重要な役割を果たします。</p>
+            </div>
+
+            <div class="element-card">
+                <div class="element-header">📄 &lt;title&gt; - ページタイトル</div>
+                <div class="element-body">
+                    <p>ページのタイトルを定義します。ブラウザのタブやブックマーク、検索結果に表示されます。</p>
+                    <div class="code-example">
+&lt;title&gt;私のウェブサイト - ホームページ&lt;/title&gt;</div>
+                    <div class="important">
+                        <strong>重要：</strong> titleタグは必須要素で、1つのページに1つだけ記述できます。SEOにも大きく影響します。
+                    </div>
+                </div>
+            </div>
+
+            <div class="element-card">
+                <div class="element-header">🏷️ &lt;meta&gt; - メタデータ</div>
+                <div class="element-body">
+                    <p>ページに関する様々な情報を提供する最重要要素です。</p>
+                    
+                    <h4>主要なmeta要素：</h4>
+                    <table class="attribute-table">
+                        <tr>
+                            <th>種類</th>
+                            <th>記述例</th>
+                            <th>用途</th>
+                        </tr>
+                        <tr>
+                            <td>文字エンコーディング</td>
+                            <td>&lt;meta charset="UTF-8"&gt;</td>
+                            <td>文字コードの指定（必須）</td>
+                        </tr>
+                        <tr>
+                            <td>ビューポート</td>
+                            <td>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</td>
+                            <td>レスポンシブデザイン対応</td>
+                        </tr>
+                        <tr>
+                            <td>説明文</td>
+                            <td>&lt;meta name="description" content="ページの説明文"&gt;</td>
+                            <td>検索結果に表示される説明</td>
+                        </tr>
+                        <tr>
+                            <td>キーワード</td>
+                            <td>&lt;meta name="keywords" content="HTML, CSS, JavaScript"&gt;</td>
+                            <td>検索キーワード（現在は効果薄）</td>
+                        </tr>
+                        <tr>
+                            <td>著者</td>
+                            <td>&lt;meta name="author" content="田中太郎"&gt;</td>
+                            <td>ページの作成者</td>
+                        </tr>
+                        <tr>
+                            <td>リフレッシュ</td>
+                            <td>&lt;meta http-equiv="refresh" content="30"&gt;</td>
+                            <td>自動リロード設定</td>
+                        </tr>
+                    </table>
+                    
+                    <h4>SNS共有用のOpen Graph（OG）タグ：</h4>
+                    <div class="code-example">
+&lt;meta property="og:title" content="ページタイトル"&gt;
+&lt;meta property="og:description" content="ページの説明"&gt;
+&lt;meta property="og:image" content="画像のURL"&gt;
+&lt;meta property="og:url" content="ページのURL"&gt;
+&lt;meta property="og:type" content="website"&gt;</div>
+                </div>
+            </div>
+
+            <div class="element-card">
+                <div class="element-header">🎨 &lt;link&gt; - 外部リソースの読み込み</div>
+                <div class="element-body">
+                    <p>CSS、アイコン、フォントなどの外部リソースを読み込みます。</p>
+                    
+                    <table class="attribute-table">
+                        <tr>
+                            <th>用途</th>
+                            <th>記述例</th>
+                        </tr>
+                        <tr>
+                            <td>CSSファイル</td>
+                            <td>&lt;link rel="stylesheet" href="style.css"&gt;</td>
+                        </tr>
+                        <tr>
+                            <td>ファビコン</td>
+                            <td>&lt;link rel="icon" href="favicon.ico"&gt;</td>
+                        </tr>
+                        <tr>
+                            <td>Webフォント</td>
+                            <td>&lt;link rel="preconnect" href="https://fonts.googleapis.com"&gt;</td>
+                        </tr>
+                        <tr>
+                            <td>正規URL</td>
+                            <td>&lt;link rel="canonical" href="https://example.com/page"&gt;</td>
+                        </tr>
+                        <tr>
+                            <td>RSS</td>
+                            <td>&lt;link rel="alternate" type="application/rss+xml" href="rss.xml"&gt;</td>
+                        </tr>
+                        <tr>
+                            <td>前読み込み</td>
+                            <td>&lt;link rel="preload" href="main.css" as="style"&gt;</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="element-card">
+                <div class="element-header">📱 &lt;style&gt; - 内部CSS</div>
+                <div class="element-body">
+                    <p>HTMLファイル内にCSSスタイルを直接記述します。</p>
+                    <div class="code-example">
+&lt;style&gt;
+body {
+    background-color: #f0f0f0;
+    font-family: Arial, sans-serif;
+}
+
+.header {
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    color: white;
+    padding: 20px;
+}
+&lt;/style&gt;</div>
+                    <div class="highlight">
+                        <strong>使い分け：</strong> 小規模なプロジェクトや特定ページのみのスタイルに適用。大規模なサイトでは外部CSSファイルを推奨。
+                    </div>
+                </div>
+            </div>
+
+            <div class="element-card">
+                <div class="element-header">⚡ &lt;script&gt; - JavaScript</div>
+                <div class="element-body">
+                    <p>JavaScriptコードや外部JavaScriptファイルを読み込みます。</p>
+                    
+                    <h4>内部JavaScript：</h4>
+                    <div class="code-example">
+&lt;script&gt;
+console.log('ページが読み込まれました');
+document.addEventListener('DOMContentLoaded', function() {
+    // ページ読み込み完了後の処理
+});
+&lt;/script&gt;</div>
+
+                    <h4>外部JavaScript：</h4>
+                    <div class="code-example">
+&lt;script src="script.js"&gt;&lt;/script&gt;
+&lt;script src="https://cdn.example.com/library.js"&gt;&lt;/script&gt;</div>
+
+                    <h4>script要素の属性：</h4>
+                    <table class="attribute-table">
+                        <tr>
+                            <th>属性</th>
+                            <th>説明</th>
+                            <th>例</th>
+                        </tr>
+                        <tr>
+                            <td>defer</td>
+                            <td>HTML解析完了後に実行</td>
+                            <td>&lt;script defer src="script.js"&gt;&lt;/script&gt;</td>
+                        </tr>
+                        <tr>
+                            <td>async</td>
+                            <td>非同期でダウンロード・実行</td>
+                            <td>&lt;script async src="analytics.js"&gt;&lt;/script&gt;</td>
+                        </tr>
+                        <tr>
+                            <td>type</td>
+                            <td>スクリプトの種類</td>
+                            <td>&lt;script type="module" src="module.js"&gt;&lt;/script&gt;</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="element-card">
+                <div class="element-header">🔧 &lt;base&gt; - ベースURL</div>
+                <div class="element-body">
+                    <p>相対URLの基準となるベースURLを設定します。</p>
+                    <div class="code-example">
+&lt;base href="https://example.com/subfolder/"&gt;</div>
+                    <p>この設定により、相対パス <code>image.jpg</code> は <code>https://example.com/subfolder/image.jpg</code> として解釈されます。</p>
+                    <div class="important">
+                        <strong>注意：</strong> baseタグは1ページに1つまでで、できるだけhead要素の先頭に配置することを推奨。
+                    </div>
+                </div>
+            </div>
+
+            <div class="category">
+                <h3>🔍 SEO最適化のためのhead要素</h3>
+                <div class="code-example">
+&lt;!-- 基本的なSEO要素 --&gt;
+&lt;title&gt;具体的で魅力的なページタイトル（60文字以内推奨）&lt;/title&gt;
+&lt;meta name="description" content="ページの内容を分かりやすく説明（160文字以内推奨）"&gt;
+
+&lt;!-- 正規URL指定 --&gt;
+&lt;link rel="canonical" href="https://example.com/this-page"&gt;
+
+&lt;!-- ロボットの制御 --&gt;
+&lt;meta name="robots" content="index, follow"&gt;
+
+&lt;!-- 構造化データ（JSON-LD形式） --&gt;
+&lt;script type="application/ld+json"&gt;
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "記事のタイトル",
+  "author": "著者名"
+}
+&lt;/script&gt;</div>
+            </div>
+
+            <div class="category">
+                <h3>📱 PWA（Progressive Web App）対応</h3>
+                <div class="code-example">
+&lt;!-- マニフェストファイル --&gt;
+&lt;link rel="manifest" href="manifest.json"&gt;
+
+&lt;!-- iOS用のメタタグ --&gt;
+&lt;meta name="apple-mobile-web-app-capable" content="yes"&gt;
+&lt;meta name="apple-mobile-web-app-status-bar-style" content="default"&gt;
+&lt;meta name="apple-mobile-web-app-title" content="アプリ名"&gt;
+
+&lt;!-- アイコン設定 --&gt;
+&lt;link rel="apple-touch-icon" sizes="180x180" href="icon-180x180.png"&gt;
+&lt;link rel="icon" type="image/png" sizes="32x32" href="icon-32x32.png"&gt;</div>
+            </div>
+
+            <div class="demo-section">
+                <h3>🧪 実際のhead要素の構成例</h3>
+                <button class="demo-button" onclick="showExample('basic')">基本構成</button>
+                <button class="demo-button" onclick="showExample('seo')">SEO最適化</button>
+                <button class="demo-button" onclick="showExample('pwa')">PWA対応</button>
+                <button class="demo-button" onclick="showExample('complete')">完全版</button>
+                
+                <div id="example-area" class="structure-example">
+                    <div id="example-content">ボタンをクリックして例を表示</div>
+                </div>
+            </div>
+
+            <div class="highlight">
+                <h3>💡 ベストプラクティス</h3>
+                <ul>
+                    <li><strong>必須要素：</strong> charset、viewport、titleは必ず含める</li>
+                    <li><strong>読み込み順序：</strong> metaタグ → title → CSS → JavaScript の順番を推奨</li>
+                    <li><strong>パフォーマンス：</strong> 重要なCSSは内部スタイル、大きなファイルは外部参照</li>
+                    <li><strong>SEO：</strong> titleとdescriptionは各ページで固有の内容にする</li>
+                    <li><strong>セキュリティ：</strong> CSP（Content Security Policy）の設定も検討</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showExample(type) {
+            const content = document.getElementById('example-content');
+            
+            const examples = {
+                basic: `&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;ページタイトル&lt;/title&gt;
+    &lt;link rel="stylesheet" href="style.css"&gt;
+&lt;/head&gt;`,
+
+                seo: `&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;SEO最適化されたページタイトル｜サイト名&lt;/title&gt;
+    &lt;meta name="description" content="このページの内容を簡潔に説明する文章です。検索結果に表示されます。"&gt;
+    &lt;meta name="keywords" content="HTML, SEO, ウェブサイト"&gt;
+    &lt;meta name="author" content="サイト作成者"&gt;
+    &lt;link rel="canonical" href="https://example.com/this-page"&gt;
+    &lt;meta name="robots" content="index, follow"&gt;
+    &lt;meta property="og:title" content="SNS共有用のタイトル"&gt;
+    &lt;meta property="og:description" content="SNS共有時の説明文"&gt;
+    &lt;meta property="og:image" content="https://example.com/og-image.jpg"&gt;
+&lt;/head&gt;`,
+
+                pwa: `&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;PWA対応アプリ&lt;/title&gt;
+    &lt;link rel="manifest" href="manifest.json"&gt;
+    &lt;meta name="theme-color" content="#667eea"&gt;
+    &lt;meta name="apple-mobile-web-app-capable" content="yes"&gt;
+    &lt;meta name="apple-mobile-web-app-status-bar-style" content="default"&gt;
+    &lt;meta name="apple-mobile-web-app-title" content="PWAアプリ"&gt;
+    &lt;link rel="apple-touch-icon" sizes="180x180" href="icon-180x180.png"&gt;
+    &lt;link rel="icon" type="image/png" sizes="32x32" href="icon-32x32.png"&gt;
+&lt;/head&gt;`,
+
+                complete: `&lt;head&gt;
+    &lt;!-- 基本設定 --&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;meta http-equiv="X-UA-Compatible" content="IE=edge"&gt;
+    
+    &lt;!-- ページ情報 --&gt;
+    &lt;title&gt;完璧なHTML headセクション｜技術ブログ&lt;/title&gt;
+    &lt;meta name="description" content="HTMLのhead要素に含めるべき全ての要素を網羅的に解説。SEO、PWA、パフォーマンス最適化まで対応。"&gt;
+    &lt;meta name="keywords" content="HTML, head要素, SEO, PWA, メタタグ"&gt;
+    &lt;meta name="author" content="ウェブ開発者"&gt;
+    
+    &lt;!-- SEO設定 --&gt;
+    &lt;link rel="canonical" href="https://example.com/html-head-guide"&gt;
+    &lt;meta name="robots" content="index, follow"&gt;
+    
+    &lt;!-- Open Graph --&gt;
+    &lt;meta property="og:title" content="HTMLのhead要素完全ガイド"&gt;
+    &lt;meta property="og:description" content="HTMLのhead要素について詳しく解説します"&gt;
+    &lt;meta property="og:image" content="https://example.com/og-image.jpg"&gt;
+    &lt;meta property="og:url" content="https://example.com/html-head-guide"&gt;
+    &lt;meta property="og:type" content="article"&gt;
+    
+    &lt;!-- PWA対応 --&gt;
+    &lt;link rel="manifest" href="manifest.json"&gt;
+    &lt;meta name="theme-color" content="#667eea"&gt;
+    &lt;meta name="apple-mobile-web-app-capable" content="yes"&gt;
+    
+    &lt;!-- アイコン --&gt;
+    &lt;link rel="icon" href="favicon.ico"&gt;
+    &lt;link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png"&gt;
+    
+    &lt;!-- スタイルシート --&gt;
+    &lt;link rel="stylesheet" href="styles/main.css"&gt;
+    &lt;link rel="preconnect" href="https://fonts.googleapis.com"&gt;
+    &lt;link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap"&gt;
+    
+    &lt;!-- JavaScript --&gt;
+    &lt;script defer src="scripts/main.js"&gt;&lt;/script&gt;
+    
+    &lt;!-- 構造化データ --&gt;
+    &lt;script type="application/ld+json"&gt;
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "HTMLのhead要素完全ガイド",
+        "author": {
+            "@type": "Person",
+            "name": "ウェブ開発者"
+        }
+    }
+    &lt;/script&gt;
+&lt;/head&gt;`
+            };
+            
+            content.innerHTML = examples[type] || 'エラー：例が見つかりません';
+        }
+        
+        // 初期表示
+        showExample('basic');
+    </script>
+</body>
+</html>

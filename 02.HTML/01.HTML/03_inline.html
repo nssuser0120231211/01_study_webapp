@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTMLインライン要素とブロック要素の完全ガイド</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .section {
+            background: white;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .section:hover {
+            transform: translateY(-3px);
+        }
+        
+        .section h2 {
+            color: #667eea;
+            border-bottom: 3px solid #4ecdc4;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+        
+        .element-type {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 25px;
+            border: 2px solid #e9ecef;
+        }
+        
+        .inline-type {
+            border-color: #ff6b6b;
+            background: linear-gradient(145deg, #fff5f5, #ffe5e5);
+        }
+        
+        .block-type {
+            border-color: #4ecdc4;
+            background: linear-gradient(145deg, #f0fffe, #e0fffe);
+        }
+        
+        .element-type h3 {
+            margin-top: 0;
+            text-align: center;
+            font-size: 1.5em;
+        }
+        
+        .inline-type h3 {
+            color: #ff6b6b;
+        }
+        
+        .block-type h3 {
+            color: #4ecdc4;
+        }
+        
+        .demo-area {
+            background: #f8f9fa;
+            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: monospace;
+        }
+        
+        .visual-demo {
+            border: 1px solid #ccc;
+            margin: 15px 0;
+            padding: 10px;
+            background: white;
+        }
+        
+        .demo-inline {
+            background: #ffebee;
+            color: #c62828;
+            padding: 5px;
+            margin: 2px;
+            border: 1px solid #ef5350;
+        }
+        
+        .demo-block {
+            background: #e0f2f1;
+            color: #00695c;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #26a69a;
+        }
+        
+        .code-example {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+        
+        .highlight {
+            background: #fff3cd;
+            padding: 15px;
+            border-left: 4px solid #ffc107;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        .important {
+            background: #f8d7da;
+            padding: 15px;
+            border-left: 4px solid #dc3545;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        .element-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .element-card {
+            background: white;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .element-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .inline-card {
+            border-color: #ff6b6b;
+            background: linear-gradient(145deg, #fff, #ffebee);
+        }
+        
+        .block-card {
+            border-color: #4ecdc4;
+            background: linear-gradient(145deg, #fff, #e0f2f1);
+        }
+        
+        .interactive-demo {
+            background: #f0fffe;
+            border: 2px solid #4ecdc4;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+        
+        .demo-button {
+            background: linear-gradient(45deg, #4ecdc4, #44a08d);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            margin: 5px;
+        }
+        
+        .demo-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .modern-note {
+            background: linear-gradient(145deg, #e3f2fd, #bbdefb);
+            border-left: 4px solid #2196f3;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 25px 0;
+        }
+        
+        .property-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+        }
+        
+        .property-table th,
+        .property-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        .property-table th {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+        }
+        
+        .property-table tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        
+        @media (max-width: 768px) {
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🧱 インライン要素 vs ブロック要素</h1>
+            <p>HTMLの基本的な要素の分類と表示特性を理解しよう</p>
+        </div>
+        
+        <div class="content">
+            <div class="section">
+                <h2>📖 基本概念の理解</h2>
+                <p>HTMLの要素は、その表示特性によって主に<strong>インライン要素</strong>と<strong>ブロック要素</strong>に分類されます。この分類は、要素がページ上でどのように配置され、どのような空間を占有するかを決定します。</p>
+                
+                <div class="comparison-grid">
+                    <div class="element-type inline-type">
+                        <h3>🔸 インライン要素</h3>
+                        <ul>
+                            <li>横に並んで表示される</li>
+                            <li>内容の幅だけを占有</li>
+                            <li>改行されない</li>
+                            <li>上下のmargin/paddingが効かない</li>
+                            <li>他の要素と同じ行に配置可能</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="element-type block-type">
+                        <h3>🔹 ブロック要素</h3>
+                        <ul>
+                            <li>縦に積み重なって表示</li>
+                            <li>親要素の幅全体を占有</li>
+                            <li>前後で改行される</li>
+                            <li>全方向のmargin/paddingが有効</li>
+                            <li>高さと幅を指定可能</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>👀 視覚的な違いを体感</h2>
+                <div class="visual-demo">
+                    <h4>インライン要素の例：</h4>
+                    <p>これは段落です。
+                        <span class="demo-inline">span要素</span>は
+                        <em class="demo-inline">em要素</em>と
+                        <strong class="demo-inline">strong要素</strong>と
+                        <a href="#" class="demo-inline">a要素</a>が
+                        同じ行に並んで表示されます。
+                    </p>
+                </div>
+                
+                <div class="visual-demo">
+                    <h4>ブロック要素の例：</h4>
+                    <div class="demo-block">div要素（ブロック要素）</div>
+                    <p class="demo-block">p要素（段落）</p>
+                    <h5 class="demo-block">h5要素（見出し）</h5>
+                    <div class="demo-block">各要素が縦に積み重なります</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>🏷️ 主要なインライン要素</h2>
+                <div class="element-list">
+                    <div class="element-card inline-card">
+                        <strong>&lt;span&gt;</strong><br>
+                        汎用インライン要素
+                    </div>
+                    <div class="element-card inline-card">
+                        <strong>&lt;a&gt;</strong><br>
+                        リンク要素
+                    </div>
+                    <div class="element-card inline-card">
+                        <strong>&lt;em&gt;</strong><br>
+                        強調（斜体）
+                    </div>
+                    <div class="element-card inline-card">
+                        <strong>&lt;strong&gt;</strong><br>
+                        重要（太字）
+                    </div>
+                    <div class="element-card inline-card">
+                        <strong>&lt;code&gt;</strong><br>
+                        コード表記
+                    </div>
+                    <div class="element-card inline-card">
+                        <strong>&lt;img&gt;</strong><br>
+                        画像要素
+                    </div>
+                    <div class="element-card inline-card">
+                        <strong>&lt;input&gt;</strong><br>
+                        入力フォーム
+                    </div>
+                    <div class="element-card inline-card">
+                        <strong>&lt;label&gt;</strong><br>
+                        ラベル要素
+                    </div>
+                    <div class="element-card inline-card">
+                        <strong>&lt;small&gt;</strong><br>
+                        小さなテキスト
+                    </div>
+                    <div class="element-card inline-card">
+                        <strong>&lt;sub&gt;</strong><br>
+                        下付き文字
+                    </div>
+                    <div class="element-card inline-card">
+                        <strong>&lt;sup&gt;</strong><br>
+                        上付き文字
+                    </div>
+                    <div class="element-card inline-card">
+                        <strong>&lt;time&gt;</strong><br>
+                        日時表記
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>📦 主要なブロック要素</h2>
+                <div class="element-list">
+                    <div class="element-card block-card">
+                        <strong>&lt;div&gt;</strong><br>
+                        汎用ブロック要素
+                    </div>
+                    <div class="element-card block-card">
+                        <strong>&lt;p&gt;</strong><br>
+                        段落要素
+                    </div>
+                    <div class="element-card block-card">
+                        <strong>&lt;h1&gt;〜&lt;h6&gt;</strong><br>
+                        見出し要素
+                    </div>
+                    <div class="element-card block-card">
+                        <strong>&lt;ul&gt;, &lt;ol&gt;</strong><br>
+                        リスト要素
+                    </div>
+                    <div class="element-card block-card">
+                        <strong>&lt;li&gt;</strong><br>
+                        リスト項目
+                    </div>
+                    <div class="element-card block-card">
+                        <strong>&lt;header&gt;</strong><br>
+                        ヘッダー領域
+                    </div>
+                    <div class="element-card block-card">
+                        <strong>&lt;main&gt;</strong><br>
+                        メイン領域
+                    </div>
+                    <div class="element-card block-card">
+                        <strong>&lt;footer&gt;</strong><br>
+                        フッター領域
+                    </div>
+                    <div class="element-card block-card">
+                        <strong>&lt;section&gt;</strong><br>
+                        セクション
+                    </div>
+                    <div class="element-card block-card">
+                        <strong>&lt;article&gt;</strong><br>
+                        記事コンテンツ
+                    </div>
+                    <div class="element-card block-card">
+                        <strong>&lt;aside&gt;</strong><br>
+                        サイドバー
+                    </div>
+                    <div class="element-card block-card">
+                        <strong>&lt;nav&gt;</strong><br>
+                        ナビゲーション
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>🔄 表示特性の詳細比較</h2>
+                <table class="property-table">
+                    <tr>
+                        <th>特性</th>
+                        <th>インライン要素</th>
+                        <th>ブロック要素</th>
+                    </tr>
+                    <tr>
+                        <td>幅（width）</td>
+                        <td>内容に応じて自動調整<br>width指定は無効</td>
+                        <td>親要素の100%<br>width指定可能</td>
+                    </tr>
+                    <tr>
+                        <td>高さ（height）</td>
+                        <td>内容に応じて自動調整<br>height指定は無効</td>
+                        <td>内容に応じて自動調整<br>height指定可能</td>
+                    </tr>
+                    <tr>
+                        <td>margin</td>
+                        <td>左右のみ有効<br>上下は無効</td>
+                        <td>全方向有効</td>
+                    </tr>
+                    <tr>
+                        <td>padding</td>
+                        <td>全方向設定可能<br>上下は背景のみ</td>
+                        <td>全方向有効</td>
+                    </tr>
+                    <tr>
+                        <td>配置</td>
+                        <td>横に並んで表示</td>
+                        <td>縦に積み重なって表示</td>
+                    </tr>
+                    <tr>
+                        <td>改行</td>
+                        <td>前後で改行されない</td>
+                        <td>前後で改行される</td>
+                    </tr>
+                    <tr>
+                        <td>内包可能な要素</td>
+                        <td>インライン要素のみ<br>（一部例外あり）</td>
+                        <td>インライン、ブロック<br>両方可能</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="interactive-demo">
+                <h3>🧪 インタラクティブデモ</h3>
+                <p>ボタンをクリックして、実際の動作を確認してみましょう：</p>
+                
+                <button class="demo-button" onclick="showDemo('basic')">基本的な違い</button>
+                <button class="demo-button" onclick="showDemo('margin')">Marginの効果</button>
+                <button class="demo-button" onclick="showDemo('size')">サイズ指定</button>
+                <button class="demo-button" onclick="showDemo('nesting')">要素の入れ子</button>
+                
+                <div id="demo-result" class="demo-area">
+                    ボタンをクリックしてデモを開始
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>⚠️ よくある間違いと注意点</h2>
+                
+                <div class="important">
+                    <h4>❌ 避けるべき間違い：</h4>
+                    <ul>
+                        <li><strong>インライン要素にブロック要素を含める</strong>
+                            <div class="code-example">
+&lt;!-- ❌ 間違い --&gt;
+&lt;span&gt;
+    &lt;div&gt;これは無効なHTML&lt;/div&gt;
+&lt;/span&gt;
+                            </div>
+                        </li>
+                        <li><strong>インライン要素にwidth/heightを指定</strong>
+                            <div class="code-example">
+&lt;!-- ❌ 効果がない --&gt;
+&lt;span style="width: 200px; height: 100px;"&gt;サイズは変わらない&lt;/span&gt;
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="highlight">
+                    <h4>✅ 正しい使い方：</h4>
+                    <div class="code-example">
+&lt;!-- ✅ 正しい --&gt;
+&lt;div&gt;
+    &lt;p&gt;段落の中に &lt;span&gt;インライン要素&lt;/span&gt; を配置&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;!-- ✅ 正しい --&gt;
+&lt;span style="margin: 0 10px; padding: 5px;"&gt;左右マージンとパディング&lt;/span&gt;
+                    </div>
+                </div>
+            </div>
+
+            <div class="modern-note">
+                <h3>🆕 現代のCSS：display プロパティによる制御</h3>
+                <p>HTML5以降、要素の表示特性はCSSの<code>display</code>プロパティで柔軟に制御できます：</p>
+                
+                <div class="code-example">
+/* インライン要素をブロック要素として表示 */
+span {
+    display: block;
+    width: 200px;
+    height: 100px;
+}
+
+/* ブロック要素をインライン要素として表示 */
+div {
+    display: inline;
+}
+
+/* インライン・ブロック（両方の特性を持つ） */
+.inline-block {
+    display: inline-block;
+    width: 150px;
+    height: 50px;
+    margin: 10px;
+}
+
+/* フレックスボックスによるレイアウト */
+.flex-container {
+    display: flex;
+    gap: 10px;
+}
+
+/* グリッドレイアウト */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+                </div>
+                
+                <p><strong>現代の開発では、</strong>HTML要素の本来の意味（セマンティクス）を重視し、表示方法はCSSで制御するのがベストプラクティスです。</p>
+            </div>
+
+            <div class="section">
+                <h2>🎯 実践的な活用例</h2>
+                
+                <h4>📝 テキスト内での強調や装飾：</h4>
+                <div class="code-example">
+&lt;p&gt;
+    この文章では&lt;strong&gt;重要な部分&lt;/strong&gt;を強調し、
+    &lt;em&gt;特別な意味&lt;/em&gt;を持つ箇所を示しています。
+    &lt;a href="#"&gt;リンク&lt;/a&gt;も同じ行に表示されます。
+&lt;/p&gt;
+                </div>
+
+                <h4>🏗️ レイアウト構造の構築：</h4>
+                <div class="code-example">
+&lt;header&gt;
+    &lt;nav&gt;
+        &lt;ul&gt;
+            &lt;li&gt;&lt;a href="#"&gt;ホーム&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="#"&gt;サービス&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="#"&gt;お問い合わせ&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/nav&gt;
+&lt;/header&gt;
+
+&lt;main&gt;
+    &lt;section&gt;
+        &lt;h2&gt;セクションタイトル&lt;/h2&gt;
+        &lt;p&gt;コンテンツの説明文&lt;/p&gt;
+    &lt;/section&gt;
+&lt;/main&gt;
+                </div>
+
+                <h4>💡 現代的なアプローチ（CSS Grid + Flexbox）：</h4>
+                <div class="code-example">
+&lt;div class="grid-container"&gt;
+    &lt;div class="card"&gt;
+        &lt;h3&gt;カードタイトル&lt;/h3&gt;
+        &lt;p&gt;カードの内容&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;style&gt;
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+&lt;/style&gt;
+                </div>
+            </div>
+
+            <div class="highlight">
+                <h3>📚 学習のポイント</h3>
+                <ul>
+                    <li><strong>基本を理解：</strong> インライン・ブロックの基本特性を覚える</li>
+                    <li><strong>セマンティクスを重視：</strong> 要素の意味を考えて選択する</li>
+                    <li><strong>CSSで制御：</strong> displayプロパティで表示方法を調整</li>
+                    <li><strong>現代的な手法：</strong> FlexboxやGridを活用したレイアウト</li>
+                    <li><strong>実践で確認：</strong> 実際にコードを書いて動作を確認</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showDemo(type) {
+            const result = document.getElementById('demo-result');
+            
+            const demos = {
+                basic: `<strong>基本的な表示の違い：</strong>
+<br><br>
+<div style="border: 2px solid #4ecdc4; margin: 5px 0; padding: 10px;">
+    div要素（ブロック）- 幅全体を占有
+</div>
+<div style="border: 2px solid #4ecdc4; margin: 5px 0; padding: 10px;">
+    もう一つのdiv要素
+</div>
+<br>
+<span style="border: 2px solid #ff6b6b; margin: 5px; padding: 5px;">span1</span>
+<span style="border: 2px solid #ff6b6b; margin: 5px; padding: 5px;">span2</span>
+<span style="border: 2px solid #ff6b6b; margin: 5px; padding: 5px;">span3</span>
+<br><br>
+インライン要素は横に並び、ブロック要素は縦に積み重なります。`,
+
+                margin: `<strong>Marginの効果の違い：</strong>
+<br><br>
+<div style="border: 2px solid #4ecdc4; margin: 20px; padding: 10px;">
+    ブロック要素 - 上下左右すべてのmarginが有効
+</div>
+<div style="border: 2px solid #4ecdc4; margin: 20px; padding: 10px;">
+    marginが効いて間隔が空いています
+</div>
+<br>
+文章の中の
+<span style="border: 2px solid #ff6b6b; margin: 20px; padding: 5px; background: #ffebee;">インライン要素</span>
+は上下のmarginが効きません
+<span style="border: 2px solid #ff6b6b; margin: 20px; padding: 5px; background: #ffebee;">こちらも</span>
+左右のmarginのみ有効です。`,
+
+                size: `<strong>サイズ指定の効果：</strong>
+<br><br>
+<div style="border: 2px solid #4ecdc4; width: 300px; height: 80px; padding: 10px; background: #e0f2f1;">
+    ブロック要素：width=300px, height=80px（有効）
+</div>
+<br>
+<span style="border: 2px solid #ff6b6b; width: 300px; height: 80px; padding: 5px; background: #ffebee;">
+    インライン要素：width=300px, height=80px（無効）
+</span>
+<br><br>
+<span style="border: 2px solid #9c27b0; width: 150px; height: 50px; padding: 10px; margin: 10px; display: inline-block; background: #f3e5f5;">
+    display: inline-block（サイズ指定可能）
+</span>`,
+
+                nesting: `<strong>要素の入れ子ルール：</strong>
+<br><br>
+<div style="border: 2px solid #4ecdc4; padding: 15px; background: #e0f2f1;">
+    <strong>ブロック要素（div）</strong>
+    <p style="border: 1px solid #666; margin: 10px 0; padding: 10px; background: white;">
+        段落要素の中に <span style="border: 1px solid #ff6b6b; padding: 3px; background: #ffebee;">インライン要素</span> を配置 ✅
+    </p>
+    <div style="border: 1px solid #666; margin: 10px 0; padding: 10px; background: white;">
+        ブロック要素の中にブロック要素 ✅
+    </div>
+</div>
+<br>
+<div style="border: 2px solid #f44336; padding: 10px; background: #ffebee;">
+    ❌ インライン要素の中にブロック要素を配置するのは無効
+    <br>（HTMLの仕様上、推奨されません）
+</div>`
+            };
+            
+            result.innerHTML = demos[type] || 'デモが見つかりません';
+        }
+        
+        // 
