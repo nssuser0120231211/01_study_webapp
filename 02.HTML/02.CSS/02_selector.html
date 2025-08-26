@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSSセレクタ完全ガイド</title>
+    <style>
+        body {
+            font-family: 'Hiragino Sans', 'ヒラギノ角ゴシック', 'Yu Gothic', '游ゴシック', Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .main-title {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+            font-size: 3em;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 1.2em;
+            margin-bottom: 40px;
+        }
+
+        .selector-section {
+            margin-bottom: 50px;
+            padding: 25px;
+            border-radius: 12px;
+            background-color: #f8f9fa;
+            border-left: 5px solid #667eea;
+            position: relative;
+        }
+
+        .selector-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 12px 12px 0 0;
+        }
+
+        .selector-section h2 {
+            color: #667eea;
+            margin-top: 0;
+            font-size: 1.8em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .level-badge {
+            background-color: #667eea;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.7em;
+            font-weight: normal;
+        }
+
+        .basic { background-color: #28a745; }
+        .intermediate { background-color: #ffc107; color: #333; }
+        .advanced { background-color: #dc3545; }
+
+        .example-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .code-example {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            position: relative;
+            white-space: pre-wrap;
+        }
+
+        .code-example::before {
+            content: 'CSS';
+            position: absolute;
+            top: -10px;
+            left: 15px;
+            background: #667eea;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+        }
+
+        .html-example::before {
+            content: 'HTML';
+            background: #e34c26;
+        }
+
+        .visual-demo {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            position: relative;
+        }
+
+        .visual-demo::before {
+            content: '表示結果';
+            position: absolute;
+            top: -10px;
+            left: 15px;
+            background: #28a745;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+        }
+
+        .selector { color: #f92672; }
+        .property { color: #66d9ef; }
+        .value { color: #a6e22e; }
+        .comment { color: #75715e; }
+
+        /* デモ用のスタイル */
+        .demo-element { color: #f92672; }
+        .demo-class { color: #a6e22e; }
+        .demo-id { color: #66d9ef; }
+
+        .demo-box {
+            padding: 15px;
+            margin: 10px 0;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+        }
+
+        .highlight { background-color: #fff3cd !important; }
+        .demo-first-child { color: #e74c3c; }
+
+        /* demo-child-selector */
+        .demo-child-selector > div > p {
+            font-weight: bold; 
+            color: red; 
+            margin: 0 0 10px 0;
+        }
+
+        /* demo-adjacent-sibling */
+        .demo-adjacent-sibling h2 + p {
+            font-size: 18px; 
+            color: red; 
+            margin: 0 0 10px 0;
+        }
+
+        /* demo-hover */
+        .demo-hover { 
+            padding: 10px 20px;
+            margin: 5px;
+            background-color: gray;
+            color: white;
+            border: none;
+            border-radius: 4px;
+         }
+        .demo-hover:hover { 
+            background-color: #667eea; 
+            color: white; 
+            cursor: pointer; 
+        }
+
+        /* demo-focus */
+        .demo-focus {
+            padding: 8px; 
+            margin: 5px; 
+            border: 1px solid #ddd; 
+            border-radius: 4px;
+        }
+        .demo-focus:focus {
+            background-color: #007bff;
+            color: white;
+        }
+
+        /* demo-active */
+        .demo-active {
+            color: black;
+        }
+        .demo-active:active {
+            color: red;
+        }
+
+        .demo-nth-child:nth-child(2n) { background-color: #e8f4fd; }
+
+        .interactive-demo {
+            background: linear-gradient(135deg, #667eea20, #764ba220);
+            padding: 25px;
+            border-radius: 12px;
+            margin: 25px 0;
+            border: 1px solid #667eea40;
+        }
+
+        .demo-button {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .demo-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .priority-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .priority-table th,
+        .priority-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .priority-table th {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            font-weight: bold;
+        }
+
+        .priority-table tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .specificity-demo {
+            display: flex;
+            gap: 20px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .specificity-box {
+            flex: 1;
+            min-width: 200px;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .spec-inline { background-color: #dc3545; }
+        .spec-id { background-color: #fd7e14; }
+        .spec-class { background-color: #ffc107; color: #333; }
+        .spec-element { background-color: #28a745; }
+
+        @media (max-width: 768px) {
+            .example-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .specificity-demo {
+                flex-direction: column;
+            }
+            
+            .main-title {
+                font-size: 2.5em;
+            }
+            
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                padding: 20px;
+            }
+        }
+
+        /* チートシート用のスタイル */
+        .cheatsheet {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 30px 0;
+        }
+
+        .cheatsheet h3 {
+            margin-top: 0;
+            color: white;
+        }
+
+        .cheatsheet-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .cheatsheet-item {
+            background: rgba(255,255,255,0.1);
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="main-title">CSSセレクタ完全ガイド</h1>
+        <p class="subtitle">セレクタをマスターして、思い通りのスタイリングを実現しよう！</p>
+
+        <!-- 基本セレクタ -->
+        <div class="selector-section">
+            <h2>🎯 基本セレクタ <span class="level-badge basic">基本</span></h2>
+            
+            <h3>1. 要素セレクタ (Element Selector)</h3>
+            <p>HTML要素名を直接指定してスタイルを適用します。</p>
+            
+            <div class="example-container">
+                <div class="code-example">
+<span class="comment">/* すべてのh1要素に適用 */</span>
+<span class="selector">h1</span> {
+    <span class="property">color</span>: <span class="value">blue</span>;
+    <span class="property">font-size</span>: <span class="value">24px</span>;
+}
+
+<span class="comment">/* すべてのp要素に適用 */</span>
+<span class="selector">p</span> {
+    <span class="property">margin</span>: <span class="value">10px 0</span>;
+}
+                </div>
+                <div class="visual-demo">
+                    <h1 style="color: blue; font-size: 24px; margin: 0;">見出し1（h1要素）</h1>
+                    <p style="margin: 10px 0;">段落テキスト（p要素）</p>
+                    <p style="margin: 10px 0;">もう一つの段落テキスト</p>
+                </div>
+            </div>
+
+            <h3>2. クラスセレクタ (Class Selector)</h3>
+            <p>class属性を持つ要素にスタイルを適用します。「.」で始まります。</p>
+            
+            <div class="example-container">
+                <div class="code-example">
+<span class="comment">/* クラス"highlight"を持つ要素 */</span>
+<span class="selector">.highlight</span> {
+    <span class="property">background-color</span>: <span class="value">yellow</span>;
+    <span class="property">font-weight</span>: <span class="value">bold</span>;
+}
+
+<span class="comment">/* クラス"error"を持つ要素 */</span>
+<span class="selector">.error</span> {
+    <span class="property">color</span>: <span class="value">red</span>;
+}
+                </div>
+                <div class="visual-demo">
+                    <div class="code-example html-example">
+&lt;p class="highlight"&gt;ハイライトされたテキスト&lt;/p&gt;
+&lt;p class="error"&gt;エラーメッセージ&lt;/p&gt;
+&lt;p&gt;普通のテキスト&lt;/p&gt;
+                    </div>
+                    <p class="highlight" style="background-color: yellow; font-weight: bold; margin: 5px 0;">ハイライトされたテキスト</p>
+                    <p style="color: red; margin: 5px 0;">エラーメッセージ</p>
+                    <p style="margin: 5px 0;">普通のテキスト</p>
+                </div>
+            </div>
+
+            <h3>3. IDセレクタ (ID Selector)</h3>
+            <p>id属性を持つ要素にスタイルを適用します。「#」で始まります。</p>
+            
+            <div class="example-container">
+                <div class="code-example">
+<span class="comment">/* ID"header"を持つ要素 */</span>
+<span class="selector">#header</span> {
+    <span class="property">background-color</span>: <span class="value">#4CAF50</span>;
+    <span class="property">padding</span>: <span class="value">20px</span>;
+    <span class="property">color</span>: <span class="value">white</span>;
+}
+
+<span class="selector">#footer</span> {
+    <span class="property">text-align</span>: <span class="value">center</span>;
+    <span class="property">font-size</span>: <span class="value">12px</span>;
+}
+                </div>
+                <div class="visual-demo">
+                    <div style="background-color: #4CAF50; padding: 20px; color: white; margin: 5px 0;">
+                        ヘッダー（id="header"）
+                    </div>
+                    <div style="text-align: center; font-size: 12px; margin: 5px 0;">
+                        フッター（id="footer"）
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 組み合わせセレクタ -->
+        <div class="selector-section">
+            <h2>🔗 組み合わせセレクタ <span class="level-badge intermediate">中級</span></h2>
+            
+            <h3>1. 子孫セレクタ (Descendant Selector)</h3>
+            <p>スペース（ ）で区切って、ある要素の中にある要素を指定します。</p>
+            
+            <div class="example-container">
+                <div class="code-example">
+<span class="comment">/* divの中のpに適用 */</span>
+<span class="selector">div p</span> {
+    <span class="property">color</span>: <span class="value">green</span>;
+}
+
+<span class="comment">/* .containerの中のh2に適用 */</span>
+<span class="selector">.container h2</span> {
+    <span class="property">border-bottom</span>: <span class="value">2px solid blue</span>;
+}
+                </div>
+                <div class="visual-demo">
+                    <div style="border: 1px solid #ddd; padding: 10px; margin: 5px 0;">
+                        <h2 style="border-bottom: 2px solid blue; margin: 0 0 10px 0;">コンテナ内の見出し</h2>
+                        <p style="color: green; margin: 0;">div内の段落テキスト</p>
+                    </div>
+                    <p style="margin: 5px 0;">div外の普通の段落</p>
+                </div>
+            </div>
+
+            <h3>2. 子セレクタ (Child Selector)</h3>
+            <p>「>」で区切って、直接の子要素のみを指定します。</p>
+            
+            <div class="example-container">
+                <div class="code-example">
+<span class="comment">/* divの直接の子のpのみに適用 */</span>
+<span class="selector">div &gt; p</span> {
+    <span class="property">font-weight</span>: <span class="value">bold</span>;
+    <span class="property">color</span>: <span class="value">red</span>;
+}
+                </div>
+                <div class="demo-child-selector">
+                    <div style="border: 1px solid #ddd; padding: 10px;">
+                        <p>直接の子要素（太字）</p>
+                        <div>
+                            <p>孫要素（太字にならない）</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>3. 隣接兄弟セレクタ (Adjacent Sibling)</h3>
+            <p>「+」で区切って、直後の兄弟要素を指定します。</p>
+            
+            <div class="example-container">
+                <div class="code-example">
+<span class="comment">/* h2の直後のpに適用 */</span>
+<span class="selector">h2 + p</span> {
+    <span class="property">font-size</span>: <span class="value">18px</span>;
+    <span class="property">color</span>: <span class="value">red</span>;
+}
+                </div>
+                <div class="demo-adjacent-sibling">
+                    <h2 style="margin: 10px 0 5px 0;">見出し</h2>
+                    <p>見出し直後の段落（スタイル適用）</p>
+                    <p>2番目の段落（スタイル適用されない）</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 疑似クラス -->
+        <div class="selector-section">
+            <h2>✨ 疑似クラスセレクタ <span class="level-badge intermediate">中級</span></h2>
+            
+            <h3>1. 動的疑似クラス</h3>
+            <div class="example-container">
+                <div class="code-example">
+<span class="comment">/* マウスホバー時 */</span>
+<span class="selector">button:hover</span> {
+    <span class="property">background-color</span>: <span class="value">#667eea</span>;
+    <span class="property">color</span>: <span class="value">white</span>;
+    <span class="property">cursor</span>: <span class="value">pointer</span>;
+}
+
+<span class="comment">/* フォーカス時 */</span>
+<span class="selector">input:focus</span> {
+    <span class="property">background-color</span>: <span class="value">#007bff</span>;
+}
+
+<span class="comment">/* クリック時 */</span>
+<span class="selector">a:active</span> {
+    <span class="property">color</span>: <span class="value">red</span>;
+}
+                </div>
+                <div class="visual-demo">
+                    <button class="demo-hover">ホバーしてみて！</button>
+                    <br>
+                    <input class="demo-focus" type="text" placeholder="クリックしてフォーカス">
+                    <br>
+                    <a class="demo-active">リンク01</a>
+                </div>
+            </div>
+
+            <h3>2. 構造的疑似クラス</h3>
+            <div class="example-container">
+                <div class="code-example">
+<span class="comment">/* 最初の子要素 */</span>
+<span class="selector">li:first-child</span> {
+    <span class="property">color</span>: <span class="value">red</span>;
+}
+
+<span class="comment">/* 偶数番目の要素 */</span>
+<span class="selector">li:nth-child(2n)</span> {
+    <span class="property">background-color</span>: <span class="value">#f0f0f0</span>;
+}
+
+<span class="comment">/* 最後の子要素 */</span>
+<span class="selector">li:last-child</span> {
+    <span class="property">font-weight</span>: <span class="value">bold</span>;
+}
+                </div>
+                <div class="visual-demo">
+                    <ul style="margin: 0; padding-left: 20px;">
+                        <li class="demo-first-child demo-nth-child" style="color: red; background-color: #f0f0f0; margin: 2px 0;">1番目のアイテム（赤字・背景色）</li>
+                        <li class="demo-nth-child" style="background-color: #f0f0f0; margin: 2px 0;">2番目のアイテム（背景色）</li>
+                        <li style="margin: 2px 0;">3番目のアイテム</li>
+                        <li class="demo-nth-child" style="background-color: #f0f0f0; font-weight: bold; margin: 2px 0;">4番目のアイテム（最後・太字・背景色）</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- 属性セレクタ -->
+        <div class="selector-section">
+            <h2>🔧 属性セレクタ <span class="level-badge advanced">上級</span></h2>
+            
+            <div class="example-container">
+                <div class="code-example">
+<span class="comment">/* type属性を持つ要素 */</span>
+<span class="selector">[type]</span> {
+    <span class="property">border</span>: <span class="value">2px solid green</span>;
+}
+
+<span class="comment">/* type="text"の要素 */</span>
+<span class="selector">[type="text"]</span> {
+    <span class="property">background-color</span>: <span class="value">#e6ffe6</span>;
+}
+
+<span class="comment">/* class属性に"btn"を含む要素 */</span>
+<span class="selector">[class*="btn"]</span> {
+    <span class="property">padding</span>: <span class="value">8px 16px</span>;
+}
+
+<span class="comment">/* href属性が"https"で始まる要素 */</span>
+<span class="selector">[href^="https"]</span> {
+    <span class="property">color</span>: <span class="value">green</span>;
+}
+                </div>
+                <div class="visual-demo">
+                    <input type="text" placeholder="text入力" style="border: 2px solid green; background-color: #e6ffe6; padding: 5px; margin: 5px; border-radius: 4px;"><br>
+                    <input type="email" placeholder="email入力" style="border: 2px solid green; padding: 5px; margin: 5px; border-radius: 4px;"><br>
+                    <button class="btn-primary" style="padding: 8px 16px; margin: 5px; background-color: #007bff; color: white; border: none; border-radius: 4px;">ボタン</button><br>
+                    <a href="https://example.com" style="color: green; margin: 5px;">HTTPS リンク</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 詳細度 -->
+        <div class="selector-section">
+            <h2>⚖️ セレクタの詳細度（優先度）</h2>
+            <p>複数のセレクタが同じ要素に適用される場合、詳細度の高いものが優先されます。</p>
+            
+            <div class="specificity-demo">
+                <div class="specificity-box spec-inline">
+                    インラインスタイル<br>
+                    <code>style="..."</code><br>
+                    詳細度: 1000
+                </div>
+                <div class="specificity-box spec-id">
+                    IDセレクタ<br>
+                    <code>#header</code><br>
+                    詳細度: 100
+                </div>
+                <div class="specificity-box spec-class">
+                    クラス・属性・疑似クラス<br>
+                    <code>.class [type] :hover</code><br>
+                    詳細度: 10
+                </div>
+                <div class="specificity-box spec-element">
+                    要素・疑似要素<br>
+                    <code>div p ::before</code><br>
+                    詳細度: 1
+                </div>
+            </div>
+
+            <table class="priority-table">
+                <thead>
+                    <tr>
+                        <th>セレクタ</th>
+                        <th>詳細度</th>
+                        <th>例</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>インラインスタイル</td>
+                        <td>1000</td>
+                        <td><code>style="color: red;"</code></td>
+                    </tr>
+                    <tr>
+                        <td>ID</td>
+                        <td>100</td>
+                        <td><code>#header</code></td>
+                    </tr>
+                    <tr>
+                        <td>クラス・属性・疑似クラス</td>
+                        <td>10</td>
+                        <td><code>.menu</code>, <code>[type="text"]</code>, <code>:hover</code></td>
+                    </tr>
+                    <tr>
+                        <td>要素・疑似要素</td>
+                        <td>1</td>
+                        <td><code>div</code>, <code>p</code>, <code>::before</code></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- インタラクティブデモ -->
+        <div class="interactive-demo">
+            <h3>🎮 インタラクティブデモ</h3>
+            <p>ボタンをクリックして、さまざまなセレクタの効果を確認してみましょう！</p>
+            
+            <div id="demo-area" style="border: 2px solid #ddd; padding: 20px; margin: 15px 0; border-radius: 8px; background-color: white;">
+                <h3 id="demo-title">デモタイトル</h3>
+                <p class="demo-text first">最初の段落</p>
+                <p class="demo-text">2番目の段落</p>
+                <div class="special-container">
+                    <p class="demo-text">コンテナ内の段落</p>
+                </div>
+                <ul>
+                    <li class="list-item">リスト項目1</li>
+                    <li class="list-item">リスト項目2</li>
+                    <li class="list-item">リスト項目3</li>
+                </ul>
+            </div>
+            
+            <button class="demo-button" onclick="applyElementSelector()">要素セレクタ（p）</button>
+            <button class="demo-button" onclick="applyClassSelector()">クラスセレクタ（.demo-text）</button>
+            <button class="demo-button" onclick="applyIdSelector()">IDセレクタ（#demo-title）</button>
+            <button class="demo-button" onclick="applyDescendantSelector()">子孫セレクタ（div p）</button>
+            <button class="demo-button" onclick="applyPseudoSelector()">疑似クラス（:first-child）</button>
+            <button class="demo-button" onclick="resetDemo()">リセット</button>
+        </div>
+
+        <!-- チートシート -->
+        <div class="cheatsheet">
+            <h3>📝 CSSセレクタ チートシート</h3>
+            <div class="cheatsheet-grid">
+                <div class="cheatsheet-item">
+                    <strong>基本セレクタ</strong><br>
+                    <code>element</code> - 要素<br>
+                    <code>.class</code> - クラス<br>
+                    <code>#id</code> - ID<br>
+                    <code>*</code> - 全選択
+                </div>
+                <div class="cheatsheet-item">
+                    <strong>組み合わせ</strong><br>
+                    <code>A B</code> - 子孫<br>
+                    <code>A > B</code> - 子<br>
+                    <code>A + B</code> - 隣接兄弟<br>
+                    <code>A ~ B</code> - 一般兄弟
+                </div>
+                <div class="cheatsheet-item">
+                    <strong>疑似クラス</strong><br>
+                    <code>:hover</code> - ホバー<br>
+                    <code>:focus</code> - フォーカス<br>
+                    <code>:first-child</code> - 最初<br>
+                    <code>:nth-child(n)</code> - n番目
+                </div>
+                <div class="cheatsheet-item">
+                    <strong>属性セレクタ</strong><br>
+                    <code>[attr]</code> - 属性あり<br>
+                    <code>[attr="val"]</code> - 完全一致<br>
+                    <code>[attr*="val"]</code> - 含む<br>
+                    <code>[attr^="val"]</code> - 始まる
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function applyElementSelector() {
+            resetDemo();
+            const elements = document.querySelectorAll('#demo-area p');
+            elements.forEach(el => {
+                el.style.backgroundColor = '#ffeb3b';
+                el.style.padding = '10px';
+                el.style.borderRadius = '4px';
+            });
+        }
+
+        function applyClassSelector() {
+            resetDemo();
+            const elements = document.querySelectorAll('#demo-area .demo-text');
+            elements.forEach(el => {
+                el.style.color = '#e91e63';
+                el.style.fontWeight = 'bold';
+                el.style.border = '2px solid #e91e63';
+                el.style.padding = '8px';
+                el.style.borderRadius = '4px';
+            });
+        }
+
+        function applyIdSelector() {
+            resetDemo();
+            const element = document.querySelector('#demo-title');
+            if (element) {
+                element.style.backgroundColor = '#2196f3';
+                element.style.color = 'white';
+                element.style.padding = '15px';
+                element.style.borderRadius = '8px';
+                element.style.textAlign = 'center';
+            }
+        }
+
+        function applyDescendantSelector() {
+            resetDemo();
+            const elements = document.querySelectorAll('#demo-area .special-container p');
+            elements.forEach(el => {
+                el.style.backgroundColor = '#4caf50';
+                el.style.color = 'white';
+                el.style.padding = '12px';
+                el.style.borderRadius = '6px';
+                el.style.fontStyle = 'italic';
+            });
+        }
+
+        function applyPseudoSelector() {
+            resetDemo();
+            const elements = document.querySelectorAll('#demo-area li:first-child');
+            elements.forEach(el => {
+                el.style.backgroundColor = '#ff9800';
+                el.style.color = 'white';
+                el.style.padding = '10px';
+                el.style.borderRadius = '4px';
+                el.style.fontWeight = 'bold';
+            });
+        }
+
+        function resetDemo() {
+            const demoArea = document.getElementById('demo-area');
+            const allElements = demoArea.querySelectorAll('*');
+            allElements.forEach(el => {
+                el.style.backgroundColor = '';
+                el.style.color = '';
+                el.style.padding = '';
+                el.style.border = '';
+                el.style.borderRadius = '';
+                el.style.fontWeight = '';
+                el.style.fontStyle = '';
+                el.style.textAlign = '';
+            });
+        }
+
+        // ページ読み込み時にリセット
+        document.addEventListener('DOMContentLoaded', function() {
+            resetDemo();
+        });
+    </script>
+</body>
+</html>
