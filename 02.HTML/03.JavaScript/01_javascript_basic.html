@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript基礎学習資料</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Hiragino Sans', 'Yu Gothic', 'Meiryo', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            margin-top: 20px;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #4a5568;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        h2 {
+            color: #2d3748;
+            border-left: 5px solid #4299e1;
+            padding-left: 15px;
+            margin: 30px 0 15px 0;
+            font-size: 1.5rem;
+        }
+        
+        h3 {
+            color: #2b6cb0;
+            margin: 20px 0 10px 0;
+            font-size: 1.2rem;
+        }
+        
+        .code-example {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            overflow-x: auto;
+            position: relative;
+            white-space: pre-wrap;
+        }
+        
+        .code-example::before {
+            content: 'JavaScript';
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            font-size: 0.8rem;
+            color: #a0aec0;
+        }
+        
+        .interactive-demo {
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+        
+        .demo-button {
+            background: linear-gradient(45deg, #4299e1, #3182ce);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .demo-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+        
+        .demo-input {
+            padding: 10px;
+            border: 2px solid #cbd5e0;
+            border-radius: 6px;
+            margin: 5px;
+            font-size: 16px;
+        }
+        
+        .demo-output {
+            background: #edf2f7;
+            border: 1px solid #cbd5e0;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 10px 0;
+            font-family: monospace;
+            min-height: 40px;
+        }
+        
+        .highlight {
+            background: #fef5e7;
+            border-left: 4px solid #f6ad55;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 6px 6px 0;
+        }
+        
+        .section {
+            margin: 40px 0;
+            padding: 20px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.8);
+        }
+        
+        ul {
+            padding-left: 20px;
+            margin: 10px 0;
+        }
+        
+        li {
+            margin: 5px 0;
+        }
+        
+        .toc {
+            background: #e6fffa;
+            border: 1px solid #38b2ac;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .toc ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .toc a {
+            color: #2c7a7b;
+            text-decoration: none;
+            display: block;
+            padding: 5px 0;
+            border-bottom: 1px dashed #bee3f8;
+        }
+        
+        .toc a:hover {
+            background: rgba(56, 178, 172, 0.1);
+            padding-left: 10px;
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📚 JavaScript基礎学習資料</h1>
+        
+        <div class="toc">
+            <h3>📋 目次</h3>
+            <ul>
+                <li><a href="#intro">1. JavaScriptとは</a></li>
+                <li><a href="#variables">2. 変数と定数</a></li>
+                <li><a href="#datatypes">3. データ型</a></li>
+                <li><a href="#operators">4. 演算子</a></li>
+                <li><a href="#conditions">5. 条件分岐</a></li>
+                <li><a href="#loops">6. 繰り返し処理</a></li>
+                <li><a href="#functions">7. 関数</a></li>
+                <li><a href="#objects">8. オブジェクトと配列</a></li>
+                <li><a href="#dom">9. DOM操作</a></li>
+                <li><a href="#events">10. イベント処理</a></li>
+            </ul>
+        </div>
+
+        <section class="section" id="intro">
+            <h2>1. JavaScriptとは</h2>
+            <p>JavaScriptは、ウェブページに動的な機能を追加するためのプログラミング言語です。ブラウザ上で実行され、ユーザーとのインタラクションを可能にします。</p>
+            
+            <div class="highlight">
+                <strong>特徴：</strong>
+                <ul>
+                    <li>ブラウザで直接実行可能</li>
+                    <li>HTMLやCSSと組み合わせて使用</li>
+                    <li>動的なウェブページの作成が可能</li>
+                    <li>イベント処理やユーザーインタラクションに対応</li>
+                </ul>
+            </div>
+
+            <div class="code-example">
+// 基本的なJavaScriptの書き方
+console.log("Hello, JavaScript!");
+alert("ようこそJavaScriptの世界へ！");
+            </div>
+
+            <div class="interactive-demo">
+                <h3>🔄 実際に試してみよう</h3>
+                <button class="demo-button" onclick="showAlert()">アラートを表示</button>
+                <button class="demo-button" onclick="showConsole()">コンソールに出力</button>
+                <div class="demo-output" id="output1">ここに結果が表示されます</div>
+            </div>
+        </section>
+
+        <section class="section" id="variables">
+            <h2>2. 変数と定数</h2>
+            <p>変数は値を格納するための「箱」のようなものです。JavaScriptでは主に<code>let</code>、<code>const</code>、<code>var</code>を使って変数を宣言します。</p>
+
+            <div class="code-example">
+// 変数の宣言
+let name = "田中太郎";      // 変更可能な変数
+const age = 25;           // 変更不可能な定数
+var city = "東京";        // 古い書き方（推奨されない）
+
+// 値の変更
+name = "佐藤花子";  // OK
+// age = 30;        // エラー！constは変更不可
+            </div>
+
+            <div class="interactive-demo">
+                <h3>🔄 変数を使ってみよう</h3>
+                <input type="text" class="demo-input" id="nameInput" placeholder="名前を入力">
+                <input type="number" class="demo-input" id="ageInput" placeholder="年齢を入力">
+                <button class="demo-button" onclick="createVariables()">変数を作成</button>
+                <div class="demo-output" id="output2"></div>
+            </div>
+        </section>
+
+        <section class="section" id="datatypes">
+            <h2>3. データ型</h2>
+            <p>JavaScriptには様々なデータ型があります。主要なものを見てみましょう。</p>
+
+            <div class="code-example">
+// 基本的なデータ型
+let text = "文字列";           // string（文字列）
+let number = 42;              // number（数値）
+let isTrue = true;            // boolean（真偽値）
+let nothing = null;           // null（空の値）
+let undefined_var;            // undefined（未定義）
+
+// データ型の確認
+console.log(typeof text);     // "string"
+console.log(typeof number);   // "number"
+console.log(typeof isTrue);   // "boolean"
+            </div>
+
+            <div class="interactive-demo">
+                <h3>🔄 データ型を確認してみよう</h3>
+                <input type="text" class="demo-input" id="valueInput" placeholder="値を入力（例：123, 'hello', true）">
+                <button class="demo-button" onclick="checkType()">データ型をチェック</button>
+                <div class="demo-output" id="output3"></div>
+            </div>
+        </section>
+
+        <section class="section" id="operators">
+            <h2>4. 演算子</h2>
+            <p>演算子を使って計算や比較を行います。</p>
+
+            <div class="code-example">
+// 算術演算子
+let a = 10;
+let b = 3;
+
+console.log(a + b);  // 13 (加算)
+console.log(a - b);  // 7  (減算)
+console.log(a * b);  // 30 (乗算)
+console.log(a / b);  // 3.333... (除算)
+console.log(a % b);  // 1  (余り)
+
+// 比較演算子
+console.log(a > b);   // true
+console.log(a === 10); // true (厳密等価)
+console.log(a != b);   // true (不等価)
+            </div>
+
+            <div class="interactive-demo">
+                <h3>🔄 計算機を作ってみよう</h3>
+                <input type="number" class="demo-input" id="num1" placeholder="数値1">
+                <select class="demo-input" id="operator">
+                    <option value="+">+</option>
+                    <option value="-">-</option>
+                    <option value="*">×</option>
+                    <option value="/">/</option>
+                </select>
+                <input type="number" class="demo-input" id="num2" placeholder="数値2">
+                <button class="demo-button" onclick="calculate()">計算</button>
+                <div class="demo-output" id="output4"></div>
+            </div>
+        </section>
+
+        <section class="section" id="conditions">
+            <h2>5. 条件分岐</h2>
+            <p>if文を使って、条件に応じて異なる処理を実行できます。</p>
+
+            <div class="code-example">
+let score = 85;
+
+if (score >= 90) {
+    console.log("優秀です！");
+} else if (score >= 70) {
+    console.log("良好です");
+} else if (score >= 60) {
+    console.log("合格です");
+} else {
+    console.log("もう少し頑張りましょう");
+}
+
+// 三項演算子
+let result = score >= 60 ? "合格" : "不合格";
+console.log(result);
+            </div>
+
+            <div class="interactive-demo">
+                <h3>🔄 成績判定システム</h3>
+                <input type="number" class="demo-input" id="scoreInput" placeholder="点数を入力（0-100）" min="0" max="100">
+                <button class="demo-button" onclick="judgeScore()">判定</button>
+                <div class="demo-output" id="output5"></div>
+            </div>
+        </section>
+
+        <section class="section" id="loops">
+            <h2>6. 繰り返し処理</h2>
+            <p>同じ処理を何度も実行したい場合は、繰り返し文を使います。</p>
+
+            <div class="code-example">
+// for文
+for (let i = 1; i <= 5; i++) {
+    console.log("回数: " + i);
+}
+
+// while文
+let count = 1;
+while (count <= 3) {
+    console.log("カウント: " + count);
+    count++;
+}
+
+// 配列の繰り返し
+let fruits = ["りんご", "バナナ", "オレンジ"];
+for (let fruit of fruits) {
+    console.log(fruit);
+}
+            </div>
+
+            <div class="interactive-demo">
+                <h3>🔄 繰り返し処理を体験</h3>
+                <input type="number" class="demo-input" id="repeatCount" placeholder="繰り返し回数" min="1" max="10">
+                <button class="demo-button" onclick="repeatProcess()">実行</button>
+                <div class="demo-output" id="output6"></div>
+            </div>
+        </section>
+
+        <section class="section" id="functions">
+            <h2>7. 関数</h2>
+            <p>関数は再利用可能なコードの塊です。処理をまとめて、必要な時に呼び出すことができます。</p>
+
+            <div class="code-example">
+// 関数の定義
+function greet(name) {
+    return "こんにちは、" + name + "さん！";
+}
+
+// 関数の呼び出し
+let message = greet("田中");
+console.log(message);  // "こんにちは、田中さん！"
+
+// アロー関数（ES6の書き方）
+const add = (a, b) => {
+    return a + b;
+};
+
+// より短縮した書き方
+const multiply = (a, b) => a * b;
+
+console.log(add(3, 5));      // 8
+console.log(multiply(4, 6)); // 24
+            </div>
+
+            <div class="interactive-demo">
+                <h3>🔄 挨拶関数を使ってみよう</h3>
+                <input type="text" class="demo-input" id="greetName" placeholder="名前を入力">
+                <button class="demo-button" onclick="callGreetFunction()">挨拶する</button>
+                <div class="demo-output" id="output7"></div>
+            </div>
+        </section>
+
+        <section class="section" id="objects">
+            <h2>8. オブジェクトと配列</h2>
+            <p>複数のデータをまとめて管理する方法を学びましょう。</p>
+
+            <div class="code-example">
+// オブジェクト
+let person = {
+    name: "山田太郎",
+    age: 30,
+    city: "大阪",
+    greet: function() {
+        return "私は" + this.name + "です";
+    }
+};
+
+console.log(person.name);    // "山田太郎"
+console.log(person.greet()); // "私は山田太郎です"
+
+// 配列
+let colors = ["赤", "青", "緑", "黄"];
+console.log(colors[0]);      // "赤"
+console.log(colors.length);  // 4
+
+// 配列のメソッド
+colors.push("紫");           // 要素を追加
+console.log(colors);         // ["赤", "青", "緑", "黄", "紫"]
+            </div>
+
+            <div class="interactive-demo">
+                <h3>🔄 配列操作を試してみよう</h3>
+                <input type="text" class="demo-input" id="arrayInput" placeholder="要素を入力">
+                <button class="demo-button" onclick="addToArray()">配列に追加</button>
+                <button class="demo-button" onclick="clearArray()">配列をクリア</button>
+                <div class="demo-output" id="output8"></div>
+            </div>
+        </section>
+
+        <section class="section" id="dom">
+            <h2>9. DOM操作</h2>
+            <p>DOM（Document Object Model）を操作して、HTMLの内容を動的に変更できます。</p>
+
+            <div class="code-example">
+// 要素の取得
+let element = document.getElementById("myId");
+let elements = document.getElementsByClassName("myClass");
+let element2 = document.querySelector(".myClass");
+
+// 内容の変更
+element.textContent = "新しいテキスト";
+element.innerHTML = "&lt;strong&gt;太字のテキスト&lt;/strong&gt;";
+
+// スタイルの変更
+element.style.color = "red";
+element.style.fontSize = "20px";
+
+// クラスの操作
+element.classList.add("newClass");
+element.classList.remove("oldClass");
+element.classList.toggle("activeClass");
+            </div>
+
+            <div class="interactive-demo">
+                <h3>🔄 DOM操作を体験</h3>
+                <p id="demoText">このテキストが変更されます</p>
+                <button class="demo-button" onclick="changeText()">テキスト変更</button>
+                <button class="demo-button" onclick="changeStyle()">スタイル変更</button>
+                <button class="demo-button" onclick="resetDemo()">リセット</button>
+            </div>
+        </section>
+
+        <section class="section" id="events">
+            <h2>10. イベント処理</h2>
+            <p>ユーザーの操作（クリック、入力など）に反応する処理を作れます。</p>
+
+            <div class="code-example">
+// イベントリスナーの追加
+button.addEventListener('click', function() {
+    console.log('ボタンがクリックされました！');
+});
+
+// より具体的な例
+document.getElementById('myButton').addEventListener('click', function(event) {
+    event.target.textContent = 'クリックされました！';
+    event.target.style.backgroundColor = 'lightblue';
+});
+
+// 入力イベント
+input.addEventListener('input', function(event) {
+    console.log('入力値: ' + event.target.value);
+});
+            </div>
+
+            <div class="interactive-demo">
+                <h3>🔄 イベント処理を体験</h3>
+                <button class="demo-button" id="eventButton">クリックしてね！</button>
+                <input type="text" class="demo-input" id="eventInput" placeholder="入力してみてください">
+                <div class="demo-output" id="output9">イベントが発生すると表示されます</div>
+            </div>
+        </section>
+
+        <div class="highlight">
+            <h3>🎉 お疲れ様でした！</h3>
+            <p>このJavaScript基礎資料を通じて、プログラミングの基本的な概念を学びました。実際のプロジェクトでは、これらの要素を組み合わせて、より複雑で実用的なアプリケーションを作成します。</p>
+            <p><strong>次のステップ：</strong></p>
+            <ul>
+                <li>より複雑なDOM操作を練習する</li>
+                <li>API（外部データ）との連携を学ぶ</li>
+                <li>ES6以降の新しい機能を探索する</li>
+                <li>フレームワーク（React、Vue.jsなど）を学ぶ</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // デモ用の配列
+        let demoArray = [];
+
+        // 1. アラート関数
+        function showAlert() {
+            alert("JavaScriptのアラートです！");
+            document.getElementById('output1').innerHTML = "アラートが表示されました！";
+        }
+
+        function showConsole() {
+            console.log("コンソールに出力されました！");
+            document.getElementById('output1').innerHTML = "コンソールに「コンソールに出力されました！」と表示されました（F12キーでコンソールを確認）";
+        }
+
+        // 2. 変数作成
+        function createVariables() {
+            let name = document.getElementById('nameInput').value || "未入力";
+            let age = document.getElementById('ageInput').value || "未入力";
+            
+            let output = `作成された変数:<br>
+                          let name = "${name}";<br>
+                          let age = ${age};<br>
+                          結果: ${name}さんは${age}歳です。`;
+            
+            document.getElementById('output2').innerHTML = output;
+        }
+
+        // 3. データ型チェック
+        function checkType() {
+            let input = document.getElementById('valueInput').value;
+            let value = input;
+            
+            // 数値の場合は変換
+            if (!isNaN(input) && input !== '') {
+                value = Number(input);
+            }
+            // booleanの場合は変換
+            else if (input.toLowerCase() === 'true') {
+                value = true;
+            }
+            else if (input.toLowerCase() === 'false') {
+                value = false;
+            }
+            
+            let output = `入力値: ${input}<br>
+                          実際の値: ${value}<br>
+                          データ型: ${typeof value}`;
+            
+            document.getElementById('output3').innerHTML = output;
+        }
+
+        // 4. 計算機
+        function calculate() {
+            let num1 = parseFloat(document.getElementById('num1').value) || 0;
+            let num2 = parseFloat(document.getElementById('num2').value) || 0;
+            let operator = document.getElementById('operator').value;
+            let result;
+            
+            switch(operator) {
+                case '+':
+                    result = num1 + num2;
+                    break;
+                case '-':
+                    result = num1 - num2;
+                    break;
+                case '*':
+                    result = num1 * num2;
+                    break;
+                case '/':
+                    result = num2 !== 0 ? num1 / num2 : "0で割ることはできません";
+                    break;
+            }
+            
+            document.getElementById('output4').innerHTML = 
+                `${num1} ${operator} ${num2} = ${result}`;
+        }
+
+        // 5. 成績判定
+        function judgeScore() {
+            let score = parseInt(document.getElementById('scoreInput').value);
+            let result;
+            
+            if (isNaN(score) || score < 0 || score > 100) {
+                result = "0-100の数値を入力してください";
+            } else if (score >= 90) {
+                result = "優秀です！🌟";
+            } else if (score >= 70) {
+                result = "良好です 👍";
+            } else if (score >= 60) {
+                result = "合格です ✅";
+            } else {
+                result = "もう少し頑張りましょう 📚";
+            }
+            
+            document.getElementById('output5').innerHTML = 
+                `点数: ${score}点<br>判定: ${result}`;
+        }
+
+        // 6. 繰り返し処理
+        function repeatProcess() {
+            let count = parseInt(document.getElementById('repeatCount').value) || 1;
+            let output = "繰り返し結果:<br>";
+            
+            for (let i = 1; i <= count; i++) {
+                output += `${i}回目の実行<br>`;
+            }
+            
+            document.getElementById('output6').innerHTML = output;
+        }
+
+        // 7. 挨拶関数
+        function greetUser(name) {
+            return `こんにちは、${name}さん！JavaScriptの世界へようこそ！`;
+        }
+
+        function callGreetFunction() {
+            let name = document.getElementById('greetName').value || "匿名";
+            let result = greetUser(name);
+            document.getElementById('output7').innerHTML = result;
+        }
+
+        // 8. 配列操作
+        function addToArray() {
+            let input = document.getElementById('arrayInput').value;
+            if (input.trim()) {
+                demoArray.push(input.trim());
+                document.getElementById('arrayInput').value = '';
+            }
+            updateArrayDisplay();
+        }
+
+        function clearArray() {
+            demoArray = [];
+            updateArrayDisplay();
+        }
+
+        function updateArrayDisplay() {
+            let output = `配列の内容: [${demoArray.join(', ')}]<br>
+                          配列の長さ: ${demoArray.length}`;
+            document.getElementById('output8').innerHTML = output;
+        }
+
+        // 9. DOM操作
+        function changeText() {
+            document.getElementById('demoText').textContent = "テキストが変更されました！";
+        }
+
+        function changeStyle() {
+            let element = document.getElementById('demoText');
+            element.style.color = 'blue';
+            element.style.fontSize = '20px';
+            element.style.fontWeight = 'bold';
+        }
+
+        function resetDemo() {
+            let element = document.getElementById('demoText');
+            element.textContent = "このテキストが変更されます";
+            element.style.color = '';
+            element.style.fontSize = '';
+            element.style.fontWeight = '';
+        }
+
+        // 10. イベント処理
+        document.addEventListener('DOMContentLoaded', function() {
+            // ボタンイベント
+            document.getElementById('eventButton').addEventListener('click', function() {
+                this.textContent = 'クリックされました！';
+                this.style.backgroundColor = '#48bb78';
+                document.getElementById('output9').innerHTML = 
+                    `${new Date().toLocaleTimeString()}: ボタンがクリックされました！`;
+            });
+
+            // 入力イベント
+            document.getElementById('eventInput').addEventListener('input', function(event) {
+                document.getElementById('output9').innerHTML = 
+                    `${new Date().toLocaleTimeString()}: "${event.target.value}" が入力されました`;
+            });
+        });
+
+        // 初期表示
+        updateArrayDisplay();
+    </script>
+</body>
+</html>
